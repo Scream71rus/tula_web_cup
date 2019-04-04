@@ -19,7 +19,11 @@ import urls
 
 
 if __name__ == '__main__':
-    define("event_manager_url", type=str)
+    define("port", type=int)
+    define("debug", type=bool)
+    define("template_path", type=str)
+    define("dsn", type=str)
+    define("size_db_connection_pool", type=int)
 
     parse_config_file("application.conf")
 
