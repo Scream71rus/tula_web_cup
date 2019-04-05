@@ -1,0 +1,29 @@
+.login-form{
+    text-align: center;
+}
+.select-block{
+    position:absolute;
+    bottom:25px;
+    right:40px;
+}
+.main{
+    width: 20%;
+    height: 400px;
+    margin: auto;
+    background-color: white;
+    margin-top: 2%;
+    box-shadow: 0 0 15px;
+    border-radius: 5%;
+    position: relative;
+}
+.btn{
+    border-radius: 8px;
+    background-color: #ffdb4d;
+    border: 1px solid transparent;
+}
+.btn:hover {
+    background-color: #fdcb09;
+}
+body{
+    background-color:#d6d6d6;
+}

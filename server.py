@@ -24,6 +24,8 @@ if __name__ == '__main__':
     define("template_path", type=str)
     define("dsn", type=str)
     define("size_db_connection_pool", type=int)
+    define("ya_app_id", type=str)
+    define("ya_app_pass", type=str)
 
     parse_config_file("application.conf")
 
