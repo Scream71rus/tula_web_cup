@@ -31,10 +31,13 @@ class CustomerModel:
         await self.db.execute(sql, (cookie, customer_id,))
 
     async def get_customer_by_cookie(self, cookie):
-        sql = """select customer_id from twc.cookie where cookie = %s"""
-        cursor_cookie = await self.db.execute(sql, (cookie,))
+        try:
+            sql = """select customer_id from twc.cookie where cookie = %s"""
+            cursor_cookie = await self.db.execute(sql, (cookie,))
 
-        sql = """select * from twc.customer where id = %s"""
-        cursor = await self.db.execute(sql, (cursor_cookie.fetchone().get('customer_id'),))
-        return cursor.fetchone()
-
+            sql = """select * from twc.customer where id = %s"""
+            cursor = await self.db.execute(sql, (cursor_cookie.fetchone().get('customer_id'),))
+            return cursor.fetchone()
+        except Exception as ex:
+            print(ex)
+            return None
