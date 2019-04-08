@@ -43,7 +43,6 @@
         {% for image in images %}
         <div class="col-3 img-item">
             <p>{{ image.get('name') }}</p>
-
             <a data-fancybox="gallery" href="{{image.get('file')}}"><img src="{{image.get('preview')}}"></a>
             <div class="row">
                 <div class="col-3 like-block">
@@ -52,14 +51,14 @@
                             {% if image.get('like') == True %}
                                 <i class="fas fa-thumbs-up"></i>
                             {% else %}
-                                <form method="post">
+                                <form method="post" action="/make_like_handler/">
                                     <input type="text" value="{{image.get('resource_id')}}" name="resource_id" style="display: none">
                                     <input type="text" value="True" name="like_img" style="display: none">
                                     <button type="submit"><i class="far fa-thumbs-up"></i></button>
                                 </form>
                             {% end %}
                         {% else %}
-                            <form method="post">
+                            <form method="post" action="/make_like_handler/">
                                 <input type="text" value="{{image.get('resource_id')}}" name="resource_id" style="display: none">
                                 <input type="text" value="True" name="like_img" style="display: none">
                                 <button type="submit"><i class="far fa-thumbs-up"></i></button>
@@ -73,14 +72,14 @@
                             {% if image.get('like') == False %}
                                 <i class="fas fa-thumbs-down"></i>
                             {% else %}
-                                <form method="post">
+                                <form method="post" action="/make_like_handler/">
                                     <input type="text" value="{{image.get('resource_id')}}" name="resource_id" style="display: none">
                                     <input type="text" value="False" name="like_img" style="display: none">
                                     <button type="submit"><i class="far fa-thumbs-down"></i></button>
                                 </form>
                             {% end %}
                         {% else %}
-                            <form method="post">
+                            <form method="post" action="/make_like_handler/">
                                 <input type="text" value="{{image.get('resource_id')}}" name="resource_id" style="display: none">
                                 <input type="text" value="False" name="like_img" style="display: none">
                                 <button type="submit"><i class="far fa-thumbs-down"></i></button>

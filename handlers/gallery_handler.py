@@ -7,11 +7,10 @@ from tornado import httpclient
 from tornado.options import options
 
 from handlers.base_handler import BaseHandler
-from models.customer_model import CustomerModel
 from models.img_model import ImgModel
 
 
-class GalleryHandler(BaseHandler, CustomerModel, ImgModel):
+class GalleryHandler(BaseHandler, ImgModel):
     async def get_total_img(self):
         url = 'https://cloud-api.yandex.net/v1/disk/public/resources?'
         public_key = {'public_key': options.ya_disk_public_key}
@@ -29,9 +28,8 @@ class GalleryHandler(BaseHandler, CustomerModel, ImgModel):
         return embedded.get('total')
 
     async def get(self):
-        cookie = self.get_cookie("twc_cookie", None)
-        if cookie:
-            customer = await self.get_customer_by_cookie(cookie)
+        if self.customer:
+            customer = self.customer
         else:
             customer = None
 
@@ -87,28 +85,3 @@ class GalleryHandler(BaseHandler, CustomerModel, ImgModel):
             pages = 1
         self.render('gallery.html', images=images, pages=pages,
                     count_img=count_img, customer=customer, page_number=page_number)
-
-    async def post(self):
-        cookie = self.get_cookie("twc_cookie", None)
-        if cookie:
-            customer = await self.get_customer_by_cookie(cookie)
-        else:
-            customer = None
-
-        if customer:
-            like_img = self.get_argument("like_img")
-            like_img = like_img == "True"
-
-            resource_id = self.get_argument("resource_id")
-            data = {
-                'like_img': like_img,
-                'resource_id': resource_id,
-                'customer_id': customer.get('id')
-            }
-            like = await self.check_like(data.get('customer_id'), data.get('resource_id'))
-            if like is not None:
-                await self.update_like(data)
-            else:
-                await self.set_img_like(data)
-
-        self.redirect('/')
