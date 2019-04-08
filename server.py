@@ -6,8 +6,11 @@ sys.path.append(
     os.path.join(os.path.abspath(os.path.dirname(__file__)), '.'))
 
 import logging
+import asyncio
 import tornado.ioloop
 import tornado.log
+import tornado.platform.asyncio
+
 from tornado.options import define, options, parse_config_file
 
 from django.conf import settings
@@ -43,7 +46,8 @@ if __name__ == '__main__':
     elif options.debug == "no":
         tornado.log.app_log.setLevel(logging.INFO)
 
-    tornado.ioloop.IOLoop.instance()
+    # tornado.ioloop.IOLoop.instance()
+    tornado.platform.asyncio.AsyncIOMainLoop().install()
 
     application = Application(
         urls.urls,
@@ -52,4 +56,5 @@ if __name__ == '__main__':
 
     application.listen(options.port)
 
-    tornado.ioloop.IOLoop.current().start()
+    # tornado.ioloop.IOLoop.current().start()
+    asyncio.get_event_loop().run_forever()

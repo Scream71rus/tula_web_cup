@@ -1,0 +1,8 @@
+tornado
+requests
+psycopg2-binary
+Cerberus
+python-dateutil
+Momoko
+redis
+django

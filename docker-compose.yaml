@@ -1,0 +1,25 @@
+db:
+  image: postgres
+  restart: always
+  environment:
+    POSTGRES_USER: twc
+    POSTGRES_PASSWORD: twc
+    POSTGRES_DB: twc
+
+cache:
+  image: redis
+  restart: always
+
+twc:
+  build: .
+  dockerfile: Dockerfile
+  links:
+    - db
+    - cache
+  ports:
+    - "9091:9091"
+  environment:
+    PORT: 9091
+    DB_HOST: db
+    CACHE_HOST: cache
+    PGPASSWORD: twc
