@@ -1,4 +1,5 @@
 
+
 class CustomerModel:
     async def save_customer_ya_token(self, data):
         sql = """insert into twc.customer(first_name, last_name, display_name, default_email, 
@@ -8,12 +9,12 @@ class CustomerModel:
                  returning id"""
 
         cursor = await self.db.execute(sql, data)
-        return cursor.fetchone()
+        return cursor.fetchone().get('id')
 
     async def update_customer_ya_token(self, expires_in, access_token, refresh_token, customer_id):
         sql = """update twc.customer set expires_in=%(expires_in)s, 
                                          access_token=%(access_token)s,
-                                         refresh_token=%(refresh_token)s where id = %(customer_id)s)"""
+                                         refresh_token=%(refresh_token)s where id = %(customer_id)s"""
 
         await self.db.execute(sql, {'expires_in': expires_in,
                                     'access_token': access_token,
@@ -27,4 +28,13 @@ class CustomerModel:
 
     async def set_customer_cookie(self, cookie, customer_id):
         sql = """insert into twc.cookie(cookie, customer_id) values(%s, %s)"""
-        await self.db.execute(sql, (cookie, customer_id))
+        await self.db.execute(sql, (cookie, customer_id,))
+
+    async def get_customer_by_cookie(self, cookie):
+        sql = """select customer_id from twc.cookie where cookie = %s"""
+        cursor_cookie = await self.db.execute(sql, (cookie,))
+
+        sql = """select * from twc.customer where id = %s"""
+        cursor = await self.db.execute(sql, (cursor_cookie.fetchone().get('customer_id'),))
+        return cursor.fetchone()
+

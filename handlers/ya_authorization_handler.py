@@ -65,8 +65,7 @@ class YaAuthorizationHandler(BaseHandler, CustomerModel):
 
             if customer is None:
                 customer_id = await self.save_customer_ya_token(data)
-
-                session_key = os.urandom(24).encode("hex")
+                session_key = os.urandom(24).hex()
                 self.set_cookie('twc_cookie', session_key, expires_days=180)
                 await self.set_customer_cookie(session_key, customer_id)
             else:
@@ -75,10 +74,10 @@ class YaAuthorizationHandler(BaseHandler, CustomerModel):
                                                     data.get('refresh_token'),
                                                     customer.get('id'))
 
-                session_key = os.urandom(24).encode("hex")
+                session_key = os.urandom(24).hex()
                 self.set_cookie('twc_cookie', session_key, expires_days=180)
                 await self.set_customer_cookie(session_key, customer.get('id'))
 
-            self.redirect('/') # TODO куда-то
+            self.redirect('/')
         else:
             self.redirect('/login')

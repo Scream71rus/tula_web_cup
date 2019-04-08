@@ -24,8 +24,17 @@ if __name__ == '__main__':
     define("template_path", type=str)
     define("dsn", type=str)
     define("size_db_connection_pool", type=int)
+
     define("ya_app_id", type=str)
     define("ya_app_pass", type=str)
+
+    define("ya_disk_id", type=str)
+    define("ya_disk_pass", type=str)
+    define("ya_disk_expires_in", type=str)
+    define("ya_disk_access_token", type=str)
+    define("ya_disk_refresh_token", type=str)
+    define("ya_disk_public_url", type=str)
+    define("ya_disk_public_key", type=str)
 
     parse_config_file("application.conf")
 

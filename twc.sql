@@ -1,6 +1,6 @@
 create schema twc;
 
-create table twc.customer(
+create table if not exists twc.customer(
     id serial primary key,
     first_name text not null,
     last_name text not null,
@@ -13,3 +13,15 @@ create table twc.customer(
     refresh_token text not null,
     created timestamp not null default now()
 );
+
+create table if not exists twc.cookie (
+    cookie text not null,
+    customer_id integer not null
+);
+
+create table if not exists twc.img_like(
+    id serial primary key,
+    customer_id integer not null,
+    resource_id text not null,
+    like_img boolean
+)

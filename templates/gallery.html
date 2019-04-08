@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Галерея</title>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+</head>
+<body>
+
+<nav class="navbar-light bg-light">
+    <div class="container" style="padding: 0.5%">
+        <div class="row">
+            <div class="col-2">
+                <a href="/login">
+                    <button>Войти</button>
+                </a>
+            </div>
+            <div class="col-4"></div>
+            <div class="col-6" style="text-align: right">
+                <p>Выводить по
+                    <a href="/?count_img=10">10</a>
+                    <a href="/?count_img=20">20</a>
+                    <a href="/?count_img=50">50</a>
+                    <a href="/?count_img=0">все</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container" style="background-color: #e8e5e5">
+    <div class="row">
+        {% for image in images %}
+        <div class="col-3" style="padding: 2%; max-height: 230px;">
+            <p>{{ image.get('name') }}</p>
+
+            <a data-fancybox="gallery" href="{{image.get('file')}}"><img src="{{image.get('preview')}}"></a>
+            <div class="row">
+                <div class="col-3" style="margin-top: 1%;">
+                    {% if customer %}
+                        {% if image.get('like') != None %}
+                            {% if image.get('like') == True %}
+                                <i class="fas fa-thumbs-up"></i>
+                            {% else %}
+                                <form method="post">
+                                    <input type="text" value="{{image.get('resource_id')}}" name="resource_id" style="display: none">
+                                    <input type="text" value="True" name="like_img" style="display: none">
+                                    <button type="submit"><i class="far fa-thumbs-up"></i></button>
+                                </form>
+                            {% end %}
+                        {% else %}
+                            <form method="post">
+                                <input type="text" value="{{image.get('resource_id')}}" name="resource_id" style="display: none">
+                                <input type="text" value="True" name="like_img" style="display: none">
+                                <button type="submit"><i class="far fa-thumbs-up"></i></button>
+                            </form>
+                        {% end %}
+                    {% end %}
+                </div>
+                <div class="col-3" style="margin-top: 1%;">
+                    {% if customer %}
+                        {% if image.get('like') != None %}
+                            {% if image.get('like') == False %}
+                                <i class="fas fa-thumbs-down"></i>
+                            {% else %}
+                                <form method="post">
+                                    <input type="text" value="{{image.get('resource_id')}}" name="resource_id" style="display: none">
+                                    <input type="text" value="False" name="like_img" style="display: none">
+                                    <button type="submit"><i class="far fa-thumbs-down"></i></button>
+                                </form>
+                            {% end %}
+                        {% else %}
+                            <form method="post">
+                                <input type="text" value="{{image.get('resource_id')}}" name="resource_id" style="display: none">
+                                <input type="text" value="False" name="like_img" style="display: none">
+                                <button type="submit"><i class="far fa-thumbs-down"></i></button>
+                            </form>
+                        {% end %}
+                    {% end %}
+                </div>
+                <div class="col-6"></div>
+            </div>
+        </div>
+        {% end %}
+    </div>
+    <div style="text-align: center; padding-top: 2%">
+        {% for page in range(pages) %}
+        <a href="/?page_number={{ page }}&count_img={{ count_img }}">{{ page + 1}}</a>
+        {% end %}
+    </div>
+</div>
+</body>
+</html>
