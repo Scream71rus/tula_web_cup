@@ -6,6 +6,7 @@
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 
+    <link rel="stylesheet" href="/static/gallery.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
@@ -14,34 +15,38 @@
 <body>
 
 <nav class="navbar-light bg-light">
-    <div class="container" style="padding: 0.5%">
+    <div class="container nav-cont">
         <div class="row">
-            <div class="col-2">
+            <div class="col-4">
+                {% if not customer %}
                 <a href="/login">
                     <button>Войти</button>
                 </a>
+                {% else %}
+                <p>{{ customer.get('first_name') }} {{ customer.get('last_name') }}</p>
+                {% end %}
             </div>
-            <div class="col-4"></div>
-            <div class="col-6" style="text-align: right">
+            <div class="col-2"></div>
+            <div class="col-6 nav-count-img">
                 <p>Выводить по
-                    <a href="/?count_img=10">10</a>
-                    <a href="/?count_img=20">20</a>
-                    <a href="/?count_img=50">50</a>
-                    <a href="/?count_img=0">все</a>
+                    <a href="/?count_img=10" class="{% if count_img == 10 %} count_img {% end %}">10</a>
+                    <a href="/?count_img=20" class="{% if count_img == 20 %} count_img {% end %}">20</a>
+                    <a href="/?count_img=50" class="{% if count_img == 50 %} count_img {% end %}">50</a>
+                    <a href="/?count_img=0" class="{% if count_img == 0 %} count_img {% end %}">все</a>
                 </p>
             </div>
         </div>
     </div>
 </nav>
-<div class="container" style="background-color: #e8e5e5">
+<div class="container gallery-cont">
     <div class="row">
         {% for image in images %}
-        <div class="col-3" style="padding: 2%; max-height: 230px;">
+        <div class="col-3 img-item">
             <p>{{ image.get('name') }}</p>
 
             <a data-fancybox="gallery" href="{{image.get('file')}}"><img src="{{image.get('preview')}}"></a>
             <div class="row">
-                <div class="col-3" style="margin-top: 1%;">
+                <div class="col-3 like-block">
                     {% if customer %}
                         {% if image.get('like') != None %}
                             {% if image.get('like') == True %}
@@ -62,7 +67,7 @@
                         {% end %}
                     {% end %}
                 </div>
-                <div class="col-3" style="margin-top: 1%;">
+                <div class="col-3 like-block">
                     {% if customer %}
                         {% if image.get('like') != None %}
                             {% if image.get('like') == False %}
@@ -88,9 +93,9 @@
         </div>
         {% end %}
     </div>
-    <div style="text-align: center; padding-top: 2%">
+    <div class="nav-page">
         {% for page in range(pages) %}
-        <a href="/?page_number={{ page }}&count_img={{ count_img }}">{{ page + 1}}</a>
+        <a href="/?page_number={{ page }}&count_img={{ count_img }}" class="{% if page_number == page %} page {% end %}">{{ page + 1}}</a>
         {% end %}
     </div>
 </div>

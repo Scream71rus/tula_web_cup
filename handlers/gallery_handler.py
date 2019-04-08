@@ -86,7 +86,7 @@ class GalleryHandler(BaseHandler, CustomerModel, ImgModel):
         else:
             pages = 1
         self.render('gallery.html', images=images, pages=pages,
-                    count_img=count_img, customer=customer)
+                    count_img=count_img, customer=customer, page_number=page_number)
 
     async def post(self):
         cookie = self.get_cookie("twc_cookie", None)

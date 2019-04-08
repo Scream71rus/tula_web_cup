@@ -1,0 +1,26 @@
+.page{
+    color: red;
+}
+.count_img{
+    color: red;
+}
+.nav-cont{
+    padding: 0.5%;
+}
+.nav-count-img{
+    text-align: right;
+}
+.gallery-cont{
+    background-color: #e8e5e5;
+}
+.img-item{
+    padding: 2%;
+    max-height: 230px;
+}
+.like-block{
+    margin-top: 1%;
+}
+.nav-page{
+    text-align: center;
+    padding-top: 2%;
+}
