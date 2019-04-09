@@ -41,3 +41,7 @@ class CustomerModel:
         except Exception as ex:
             print(ex)
             return None
+
+    async def delete_customer_cookie(self, cookie):
+        sql = """delete from twc.cookie where cookie = %s"""
+        await self.db.execute(sql, (cookie,))

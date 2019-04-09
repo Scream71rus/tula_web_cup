@@ -6,9 +6,12 @@ from handlers.ya_authorization_handler import YaAuthorizationHandler
 from handlers.gallery_handler import GalleryHandler
 from py_scripts.get_token_for_ya_disk import GetTokenForYaDisk
 from handlers.make_like_handler import MakeLikeHandler
+from handlers.logout_handler import LogOutHandler
+
 
 urls = [
     (r"/login/?", LoginHandler,),
+    (r"/logout/?", LogOutHandler,),
     (r"/?", GalleryHandler,),
     (r"/ya_get_token/?", YaAuthorizationHandler,),
     (r"/get_token_for_ya_disk/?", GetTokenForYaDisk,),

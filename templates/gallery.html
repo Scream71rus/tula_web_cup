@@ -23,6 +23,7 @@
                     <button>Войти</button>
                 </a>
                 {% else %}
+                <button><a href="/logout/">Выйти</a></button>
                 <p>{{ customer.get('first_name') }} {{ customer.get('last_name') }}</p>
                 {% end %}
             </div>
