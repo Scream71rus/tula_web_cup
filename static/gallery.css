@@ -16,6 +16,8 @@
 .img-item{
     padding: 2%;
     max-height: 230px;
+    position: relative;
+    top: 1em;
 }
 .like-block{
     margin-top: 1%;
